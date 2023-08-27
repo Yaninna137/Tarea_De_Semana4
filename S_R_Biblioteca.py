@@ -1,255 +1,129 @@
-class Libros():
-    def __init__(self,titulo,autor,genero,num_pagina):
+class Libros:
+    def __init__(self,titulo,autor,num_pagina):
         self.titulo = titulo
-        self.autor = autor
-        self.genero = genero
-        self.num_pagina = num_pagina
-    def __str__(self):
-        return f"'{self.titulo}' por {self.autor} con {self.num_pagina} páginas,{self.genero}"   
+        self.autor  = autor
+        self.num_pag = num_pagina
     def __repr__(self):
-        return f"'{self.titulo}' por {self.autor} con {self.num_pagina} páginas,{self.genero}"   
-class Usuarios():
-    def __init__(self,nombre,apellido,):
+        return f'El libro "{self.titulo}" por {self.autor}.Cuenta con {self.num_pag} numeros de páginas'
+class Usuarios:
+    def __init__(self,nombre,apellido):
         self.nombre = nombre
         self.apellido = apellido
-        self.lista_de_usuarios = []
-        self.libros_pedidos = {}
-    def __str__(self):
-        return f'{self.nombre}{self.apellido}'  
+        self.Historial_Prestamo = []
     def __repr__(self):
-        return f'{self.nombre}{self.apellido}'  
-    # def Historial_de_prestamos(self):
-    #     pass
-class Prestamos():
-    def __init__(self,libro,usuario,f_prestamo,f_devolver):
-        self.libro = libro
+        return f'{self.nombre} {self.apellido}'
+    
+    def Agregar_HU(self,r_prestamo):
+        self.Historial_Prestamo.append(r_prestamo)              # Registramos historial
+    def mostrar_historial(self):
+        return self.Historial_Prestamo
+class Prestamos:
+    def __init__(self,usuario,libro,f_prestamo,f_devolucion):
+        self.R_prestamo = f'El usuario {usuario} pidio prestado: {libro}, el dia {f_prestamo}.Fecha ah devolver: {f_devolucion}'
         self.usuario = usuario
+        self.libro = libro
         self.f_prestamo = f_prestamo
-        self.f_devolver = f_devolver
-        self.registro_de_libros_prestados = []
-    def __str__(self):
-        return f'{self.usuario} {self.libro} {self.f_prestamo} {self.f_devolver}'   
-    def del_libro_prestado(self):
-        pass
-class Catalogo_Bibloteca(): #registro
-    def __init__(self,nombre):
-        self.nombre = nombre
-        self.r_libro = []
-        self.libros_disponibles_y_no = {}                       # Un diccionario de todos los libros , si estan disponibles o no 
-        self.r_usuario = []                                  #Una lista para almacenar todos los usuarios
-        self.r_prestamo = None
-    def Registros_de_libros(self,m = 0):
-        longitud = len(self.r_libro)
-        if m == 0:
-            if longitud > 0:
-                for x in range(len(self.r_libro)):                        # Con un for recorremos los libros , que se encuntren en la lista de registros del catalogo
-                    print('{}.{}'.format(x+1,self.r_libro[x]))            # mostar cada libro
-            else:
-                print('No se encuentra ningun libro registrado en el catalogo de la biblioteca')
-        if m == '1':
-            if longitud >0:
-                return self.r_libro
-            else:
-                return 0
-    def eliminar_libro_cat(self,ide):
-        if ide <= len(self.r_libro) and ide > 0:                  # Si el ide es menor o igual y diferente a 0, removera el libro que se encuentre en indice -1
-                print('El libro {} ah sido eliminado de la lista'.format(self.r_libro[ide-1]))
-                self.r_libro.remove(self.r_libro[ide-1])  
+        self.f_devolver = f_devolucion
+        self.Libros_Prestados = []
+    def __repr__(self) -> str:
+        return f'{self.usuario} {self.libro} {self.f_prestamo} {self.f_devolver}'    
+    def añadir_his_ah_usuario(self,usuario):          # mandele el dato al usario de su registro
+        usuario.Agregar_HU(self.R_prestamo)
+class Catalogo_Bib:
+    def __init__(self):
+        self.lista_librosCB = []
+        self.Estado_librosCB_D = {}
+        self.lista_UsuariosR = []
+    def Agregar_LCB(self,libro):
+        self.lista_librosCB.append(libro)
+        self.Estado_librosCB_D[libro] = True
+    def Agregar_UCB(self,usuario):
+        self.lista_UsuariosR.append(usuario)
+    def Eliminar_LCB(self,ide):
+        self.Estado_librosCB_D.pop(self.lista_librosCB[ide])       #Eliminar libro del diccionario de disponibilidad
+        self.lista_librosCB.remove(self.lista_librosCB[ide])       #Eliminar libro de lista 
+    def Cambiar_Estado(self,libro):                               #Cambiar estado del libro true:disponible, false: no disponible
+        if self.Estado_librosCB_D[libro] == False:
+            self.Estado_librosCB_D[libro] = True
         else:
-            print('Los datos ingresados no se encuentrar dentro del catalogo')
-    def agregar_libro_cat(self,libro):
-        print(libro)
-        self.r_libro.append(libro)                                    
-        a = len(self.r_libro)                                  
-        self.libros_disponibles_y_no[libro] = True                    # Añadimos el libro y lo colocamo True de que est disponible
-        print('El {} ha sido ingresado al catalogo.'.format(libro))
-    def libro_disponible(self):
-        cat = Catalogo.libros_disponibles_y_no
-        lista_de_libros_disponibles = []                       #Lista que almacena todos los libros disponibles
-        for x in cat:
-            if  cat[x] == True:                                # Si el libro esta True = 'disponible' , guardar en la lista 
-                lista_de_libros_disponibles.append(x)
-        return lista_de_libros_disponibles                    # entrehar una lista de los libros disponibles
-    def busqueda_de_libro(self,ide):
-        return self.r_libro[ide]   
-    def Agregar_usuario_en_lista_de_registro(self,usuario):
-        self.r_usuario.append(usuario)                      #Agregamos a los usarios en una lista de los usuarios
-        print('El usuario {} ah sido ingresado al Sistema'.format(usuario))
-    def Cambiar_estado_de_libro(self,libro):
-        self.libros_disponibles_y_no[libro] = False
+            self.Estado_librosCB_D[libro] = False
+    def Libros_disponibles(self):                                #Entegar una lista de los libros disponibles
 
-    def es_usuario_registrado(self, usuario):
-      if usuario in self.r_usuario:
-          return True
-      else:
-          return False
-
-
-def catalogo(opcion_selecionada):
-    if opcion_selecionada == 'a':                               # Si la opcion selcionada es a , ejecutar el sig codigo # Agregrar libro ah una lista
-        while True:                                             # Solicitar los datos a agregar 
-            a = input('Ingrese el Titulo : ')
-            b = input('Ingrese el Autor :  ')
-            c = input('Ingrese el Genero : ')
-            d = input('Ingrese el Num. Pagina: ')
-                                                                   # Crear el objeto libro con los datos ingresados
-            Catalogo.agregar_libro_cat(Libros(a,b,c,d))                # Agregar los datos del libro al catalogo
-            r = input("¿Desea agregar otro? (si)(no) :  ").lower()    # Consultar si quiere agregar otro mas o no
-            if r == 'no' or r =='si':                                           # En caso de que el usuario escriba no , se rompe el bucle y vuelve al menu principal
-                if r =='no':
-                    print('Los nuevos datos han sido guardados en el sistema!')
-                    break
-            elif r != 'si':
-                print('Has escrito una respuesta invalida!')
-                break             
-    if opcion_selecionada == 'b':                               # Eliminar el libro de la categoria
-        while True:   
-            print('Estos son los libros que tienes en el catalogo \n¿Cual de todos quieres elimiar?')     
-            Catalogo.Registros_de_libros()                             # Manipulapos el objeto catalogo para que nos muesre los datos de libro que tenemos
-            ide = int(input('Ingrese el id ah eliminar: '))            # solicitamos un id en este caso es el index del que le mostramos al usuario 
-            Catalogo.eliminar_libro_cat(ide)                           # Manipulamos al objeto catalogo , para que elimine dicho libro , entregandole el ide.
-            r = input("¿Desea eliminar otro? (si)(no) :  ").lower()      # Una consulta si quiere continuar.
-            if r == 'no' or r =='si':                                           # En caso de que el usuario escriba no , se rompe el bucle y vuelve al menu principal
-                if r =='no':
-                    break
-            elif r != 'si':
-                print('Has escrito una respuesta invalida!')
-                break 
-    if opcion_selecionada == 'c':
-        Catalogo.Registros_de_libros()                           # En el objeto Catalogo le hacemos que haga la accion de mostrar la lista de todos los libros que tenga
+        contador = 0
+        log = len(self.Estado_librosCB_D)
+        libros_disponibles = []
+        if log > 0:
+            for i in self.Estado_librosCB_D:
+                contador += 1
+                if self.Estado_librosCB_D[i] == True:
+                    libros_disponibles.append(f'{contador}. {self.lista_librosCB[contador -1]}')
+            return libros_disponibles  
+        else: 
+            print('0 libro disponible')
+    def Mostra_libros(self):
+        for i in range(len(self.lista_librosCB)):
+            print(i+1,'.-',self.lista_librosCB[i])
+Catalogo = Catalogo_Bib()
+salir = True
+while salir == True:
+    print('Bienvenido')
+    print('1.Registrar Usuario')
+    print('2.Añadir libro al catalogo')
+    print('3.Eliminar libro al catalogo')
+    print('4.Solicitar libro.')
+    print('5.Devolución de libro')
+    print('7.Libros disponibles')
+    print('8.Veer historial del Usuario')
+    print('9.Salir')
+    opcion = input('Ingrese un numero: ')
+    if opcion == '1':
+        print('Porfavor ingrese los siguientes datos para completar sus registro:')
         while True:
-            salir = input('\n¿Desea volver al menu?.Escriba (exit):  ').lower()   # Consulta para salir del codigo
-            if salir == 'exit':
-                break
+            nombre = input('Ingrese el nombre: ')
+            apellido = input('Ingrese el apellido: ')
+            Persona = Usuarios(nombre,apellido)
+            Catalogo.Agregar_UCB(Persona)
+            print(f'El usuario {Persona} ah sido ingresado al sistema')
+            respuesta = input('¿Desea agregar otro usuario? (si)(no): ').lower()
+            if respuesta == 'si' or respuesta =='no':
+                if respuesta == 'no':
+                    break
             else:
-                print('Dato invalido!')
-def Opc_Usuario(opcion_select):
-    if opcion_select == 'a':
+                print('Error.El dato ingresado es incorrecto.')
+                break
+    if opcion == '2':
+        print('Para registrar libro agrege los suiguientes datos:')
         while True:
-            a = input('Ingrese su nombre: ')
-            b = input('Ingrese su apellido: ')
-            Nuevo_Usuario = Usuarios(a,b) 
-            Catalogo.Agregar_usuario_en_lista_de_registro(Nuevo_Usuario)                                             # Creamos el objeto Usuario, con los datos que solicitamos previamente
-            res = input('Desea ingresar otro usuario en el sistema (si)(no): ')
-            # if res == 'mostrar':
-            #     for x in Catalogo.r_usuario:
-            #         print(x)
-            if res == 'no' or res =='si':                                           # En caso de que el usuario escriba no , se rompe el bucle y vuelve al menu principal
-                if res =='no':
+            Titulo = input('Ingrese el titulo: ')
+            Autor = input('Ingrese el autor: ')
+            Num_pagina = input('Ingrese el num. de páginas: ')
+            libro = Libros(Titulo,Autor,Num_pagina)
+            Catalogo.Agregar_LCB(libro)
+            print(libro,'Ha sido ingresado al sistema')
+            respuesta = input('¿Desea agregar otro libro? (si)(no): ').lower()
+            if respuesta == 'si' or respuesta =='no':
+                if respuesta == 'no':
                     break
-            elif res != 'si':
-                print('Has escrito una respuesta invalida!')
-                break
-    if opcion_select == 'b':
-        pass
-    if opcion_select == 'c':
-        pass
-    if opcion_select == 'd':
-        pass
-    if opcion_select == 'a':
-        pass
-    if opcion_select == 'e':
-        pass
-Catalogo = Catalogo_Bibloteca('Catalogo_1')              
-ventana = True
-while ventana == True:
-    print('\t\t.::Bienvenido al Sistema de gestión de la Biblioteca::.\n')
-    print('\t1.Catalogo')
-    print('\t2.Usuario')
-    print('\t3.Salir')
-    respuesta = input('\nIngrese un número: ')
-
-    if respuesta == '1':                
-        print('a) Añadir Libro al catalogo')          
-        print('b) Eliminar Libro del catalogo') 
-        print('c) Mostrar Todos los libros del Catalogo') 
-        respuesta_1 = input('\nIngrese una opción: ') 
-        if respuesta_1 =='a':
-            catalogo('a')
-        elif respuesta_1 =='b':
-            catalogo('b')
-        elif respuesta_1 == 'c':
-            catalogo('c')
-    elif respuesta == '2':
-        print('a) Registrar Nuevo Usuario')                                   # Registrar usuario
-        print('b) Solicitar un libro')                                        # Prestar libro
-        print('c) Devolver libro')                                            # Devolver libro
-        print('d) Ver libros disponibles')                                   # Consultar libros disponibles
-        print('e) Ver el Historial de prestamos')                            # Ver el historial de préstamos de un usuario.
-        opcion_select = input('Ingrese una opción: ')
-        if opcion_select == 'a':
-            Opc_Usuario('a')
-        if opcion_select == 'b':
-            print('¿Que libro desea pedir prestado?.')
-            print('¬ Contamos con los siguientes libros disponibles: ')
-            for x in range(len(Catalogo.libro_disponible())):
-                print(x+1,Catalogo.libro_disponible()[x])
-
-            a =(int(input('Ingrese el id del libro a pedir: '))-1)
-            nombre = input('Ingrese su nombre:')
-            apellido = input('Ingrese su apellido:')
-            c = input('Ingrese la fecha del prestamo:   ')
-            d = input('Ingrese la fecha la fecha de devolución: ')
-            if a <= len(Catalogo.r_libro) and a >=0:
-                if Catalogo.busqueda_de_libro(a) in Catalogo.libro_disponible():
-                    usuario = Usuarios(nombre, apellido)
-                    a = Catalogo.es_usuario_registrado(usuario)
-                    if a == True:
-                        print('Usuario esta :D')
-                    else:
-                        print('Usuario no registrado :(')
-                else:
-                    print('El libro no se encuentra disponible')
             else:
-                print('El numero ingresado se encuntra fuera de rango.')
-                respu = input('Desea volver intentarlo (si)(no: ')
-                if respu == 'si' or respu == 'no':
-                    if respu == 'no':
-                        break
-                else:
-                    print('Respuesta inavalida!')
-                    break
-
-
-            # print('¿Que libro desea pedir prestado?.')
-            # print('¬ Contamos con los siguientes libros disponibles: ')
-            # for x in range(len(Catalogo.libro_disponible())):
-            #     print(x+1,Catalogo.libro_disponible()[x])
-
-            # a =(int(input('Ingrese el id del libro a pedir: '))-1)
-            # b = input('Ingrese su nombre:')
-            # e = input('Ingrese su nombre:')
-            # c = input('Ingrese la fecha del prestamo:   ')
-            # d = input('Ingrese la fecha la fecha de devolución: ')
-            # if a <= len(Catalogo.r_libro) and a >=0:
-            #     if Catalogo.busqueda_de_libro(a) in Catalogo.libro_disponible():
-            #         if b in Catalogo.r_usuario and e in Catalogo.r_usuario:
-            #             print('Usuario esta :D')
-            #     #     else:
-            #     #         print('Usuario no registrado :(')
-            #     #   #  Catalogo.Cambiar_estado_de_libro(Catalogo.busqueda_de_libro(a))
-            #     else:
-            #         print('El libro no se encuentra disponible')
-            # else:
-            #     print('El numero ingresado se encuntra fuera de rango.')
-            #     respu = input('Desea volver intentarlo (si)(no: ')
-            #     if respu == 'si' or respu == 'no':
-            #         if respu == 'no':
-            #             break
-            #     else:
-            #         print('Respuesta inavalida!')
-            #         break
-        if opcion_select == 'c':
-            pass
-        if opcion_select == 'd':
-            pass
-        if opcion_select == 'a':
-            pass
-        if opcion_select == 'e':
-            pass
-    elif respuesta == '3':
-        print('mensaje de despedida')
-        ventana = False
-    else:
-        print('Error. Has ingresado un número invalido.')
-        print('Por favor, ingrese un número dentro de las opciones disponibles.')
+                print('Error.El dato ingresado es incorrecto.')
+                break
+    if opcion == '3':
+        print('Contamos con los siguientes libros:')
+        Catalogo.Mostra_libros()
+        respuesta = (int(input('Ingrese el id del libro ah eliminar.Para salir ingrese (0): '))-1)
+        if respuesta <= len(Catalogo.lista_librosCB):
+            alerta = input('Estas seguro de eliminar este libro (si)(no):')
+            if alerta == 'si':
+                Catalogo.Eliminar_LCB(respuesta)
+                print('El libro ah sido eliminado del sisteme')
+            else:
+                break
+        else:
+            break
+    if opcion == '4':
+        pass
+        
+    if opcion == '9':
+        break
+#print(Catalogo.lista_UsuariosR)
+print(Catalogo.lista_librosCB)
