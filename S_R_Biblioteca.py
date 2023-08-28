@@ -11,7 +11,7 @@ class Usuarios:
         self.apellido = apellido
         self.Historial_Prestamo = []
     def __repr__(self):
-        return f'{self.nombre} {self.apellido}'
+        return f'{self.nombre}{self.apellido}'
     
     def Agregar_HU(self,r_prestamo):
         self.Historial_Prestamo.append(r_prestamo)              # Registramos historial
@@ -30,15 +30,15 @@ class Prestamos:
         self.f_devolver = f_devolucion
         self.Entregas_Anonimas = []
     def __repr__(self) -> str:
-        return f'{self.usuario} {self.libro} {self.f_prestamo} {self.f_devolver}'    
+        return f'{self.usuario.nombre} {self.usuario.apellido} {self.libro} {self.f_prestamo} {self.f_devolver}'    
     def añadir_his_ah_usuario(self,usuario):          # mandele el dato al usario de su registro
-        registro =  f'El usuario {self.usuario} pidio prestado: {self.libro}, el dia {self.f_prestamo}.Fecha ah devolver: {self.f_devolucion}'
+        registro =  f'El usuario {self.usuario.nombre} {self.usuario.apellido}  pidio prestado: {self.libro}, el dia {self.f_prestamo}.Fecha ah devolver: {self.f_devolver}'
         usuario.Agregar_HU(registro)
         self.Registro_prestamo.append(registro)
 
     def añadir_hist_devolucion(self,usuario = 'anonimo'):
         if usuario != 'anonimo':
-            registro =  f'El usuario {self.usuario} devolvio el {self.libro}, el dia {self.f_prestamo}.Cuando el dia de la devolucion er el{self.f_devolucion}'
+            registro =  f'El usuario {self.usuario} devolvio el {self.libro}, el dia {self.f_prestamo}.Cuando el dia de la devolucion er el{self.f_devolver}'
             usuario.Agregar_HU(registro)
             self.Registro_prestamo.append(registro)
         else:
@@ -87,8 +87,7 @@ class Catalogo_Bib:
             if usuario.nombre == nombre and usuario.apellido == apellido:
                 return self.lista_UsuariosR.index(usuario)                     # Si se encuentra al usuario, devolver su índice en la lista
         
-        return -1  # Si no se encuentra al usuario, devolver -1
-    
+        return -1  # Si no se encuentra al usuario, devolver -1    
     def Buscar_libro(self,titulo,autor):
         for libro in self.lista_librosCB:
             if libro.titulo == titulo and libro.autor == autor:
@@ -116,7 +115,7 @@ while salir == True:
             apellido = input('Ingrese el apellido: ')
             Persona = Usuarios(nombre,apellido)
             Catalogo.Agregar_UCB(Persona)
-            print(f'El usuario {Persona} ah sido ingresado al sistema')
+            print(f'El usuario {Persona.nombre} {Persona.apellido} ah sido ingresado al sistema')
             respuesta = input('¿Desea agregar otro usuario? (si)(no): ').lower()
             if respuesta == 'si' or respuesta =='no':
                 if respuesta == 'no':
@@ -138,14 +137,14 @@ while salir == True:
                 if respuesta == 'no':
                     break
             else:
-                print('Error.El dato ingresado es incorrecto.')
+                print('Error.Dato invalido.Salida Forzada ')
                 break
     if opcion == '3':
         if Catalogo.Mostra_libros() != -1:
             print('Contamos con los siguientes libros:')
             while True:
                 respuesta = (int(input('Ingrese el id del libro ah eliminar.Para salir ingrese (0): '))-1)
-                if respuesta <= len(Catalogo.lista_librosCB):
+                if respuesta <= len(Catalogo.lista_librosCB) and respuesta != 0:
                     alerta = input('Estas seguro de eliminar este libro (si)(no):')
                     if alerta == 'si':
                         Catalogo.Eliminar_LCB(respuesta)
@@ -164,32 +163,36 @@ while salir == True:
                 print(x+1,'¬.',Catalogo.lista_librosCB[x])
             while True:
                 ide = int(input('Ingrese el ide del libro ah solicitar: '))-1
-                s_libro = Catalogo.lista_librosCB[ide]
-                if Catalogo.Estado_librosCB_D[s_libro] == True:
-                    print('El libro se encuentra disponible.Porfavor ingrese los suiguientes datos.')
-                    s_nombre = input('Ingrese su nombre  :')
-                    s_apellido = input('Ingrese su apellido :')
-                    index = Catalogo.Buscar_usuario(nombre, apellido)
-                    if index != -1:
-                        s_usuario = Catalogo.lista_UsuariosR[index]
-                        fecha_prestamos = input('Ingrese la fecha del Prestamo   : ')
-                        fecha_devolucion = input('Ingrese la fecha del devolucion : ')
-                        Prestar_libro = Prestamos(s_usuario,s_libro,fecha_prestamos,fecha_devolucion)
-                        Prestar_libro.añadir_his_ah_usuario(s_usuario)                                   # en el objeto prestamos le pedimos que relice la accion , entregandole el usuario ,para que el usuario tenga el registro
-                        Catalogo.Cambiar_Estado(s_libro)                                                 # en el objeto de catalogo , cambiamos el estaddo del libro ah false( de que ya no esta disponible)
-                        print('Se ha relializado el registro correctamente')
-                        respuesta = input('Desea hacer otro registro?(si)(no): ')
-                        if respuesta == 'si' or respuesta == 'no':
-                            if respuesta == 'no':
+                if ide <= len(Catalogo.lista_librosCB) and ide >= 0:  
+                    s_libro = Catalogo.lista_librosCB[ide]
+                    if Catalogo.Estado_librosCB_D[s_libro] == True:
+                        print('El libro se encuentra disponible.Porfavor ingrese los suiguientes datos.\n')
+                        nombre = input('Ingrese el nombre: ')
+                        apellido = input('Ingrese el apellido: ')
+                        index = Catalogo.Buscar_usuario(nombre, apellido)
+                        if index != -1:
+                            usuario = Catalogo.lista_UsuariosR[index]
+                            fecha_prestamos = input('Ingrese la fecha del Prestamo   : ')
+                            fecha_devolucion = input('Ingrese la fecha del devolucion : ')
+                            Prestar_libro = Prestamos(usuario,s_libro,fecha_prestamos,fecha_devolucion)
+                            Prestar_libro.añadir_his_ah_usuario(usuario)                                   # en el objeto prestamos le pedimos que relice la accion , entregandole el usuario ,para que el usuario tenga el registro
+                            Catalogo.Cambiar_Estado(s_libro)                                                 # en el objeto de catalogo , cambiamos el estaddo del libro ah false( de que ya no esta disponible)
+                            print('Se ha relializado el registro correctamente')
+                            respuesta = input('Desea hacer otro registro?(si)(no): ')
+                            if respuesta == 'si' or respuesta == 'no':
+                                if respuesta == 'no':
+                                    break
+                            else:
+                                print('Error.salida forzada')
                                 break
                         else:
-                            print('Error.salida forzada')
+                            print('Lo sentimos el usuario ingresado no se encuentra en el sistema.')
                             break
                     else:
-                        print('Lo sentimos el usuario ingresado no se encuentra en el sistema.')
+                        print('Libro no disponible :(')
                         break
                 else:
-                    print('Libro no disponible :(')
+                    print('Error.El numero ingresado esta fuera de rango')
                     break
         else:
             print('Lo sentimos no contamos con ningun libro en el catalgo ahún.')      
@@ -199,14 +202,14 @@ while salir == True:
             titulo = input('Ingrese el titulo del libro: ')
             autor = input('Ingrese el nombre del author: ')
             index = Catalogo.Buscar_libro(titulo, autor)
-            if index != 1:
+            if index != -1:
                 d_libro = Catalogo.lista_librosCB[index]
                 d_nombre = input('Ingrese el nombre del usuario   :')
                 d_apellido =input('Ingrese el apellido del usuario  :')
                 fecha_prestamo = input('Ingrese la fecha en que fue prestado:')
                 fecha_devolucion = input('Ingrese la fecha entrega :')
                 index_us = Catalogo.Buscar_usuario(nombre,apellido)
-                if index_us != 1:
+                if index_us != -1:
                     d_usuario = Catalogo.lista_UsuariosR[index_us]
                     Devolucion = Prestamos(d_usuario,d_libro,fecha_prestamo,fecha_devolucion)
                     Devolucion.añadir_hist_devolucion(d_usuario)
@@ -251,14 +254,12 @@ while salir == True:
                 log = len(Catalogo.lista_UsuariosR)
                 if log > 0:
                     for x in range(log):
-                        print(x-1,'¬.',Catalogo.lista_UsuariosR[x])
+                        print(x+1,'¬.',Catalogo.lista_UsuariosR[x].nombre, Catalogo.lista_UsuariosR[x].nombre)
                 else:
                     print('No hay usuario Registrado')
-            else:
-                break
     if opcion == '8':
         break
     if opcion not in ['1','2','3','4','5','6','7','8']:
-        print('Error!.Ingres un numero valido')
+        print('Error!.Ingrese un numero valido')
 
 
