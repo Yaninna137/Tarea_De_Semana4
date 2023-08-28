@@ -98,7 +98,7 @@ class Catalogo_Bib:
 Catalogo = Catalogo_Bib()
 salir = True
 while salir == True:
-    print('Bienvenido')
+    print(' ¬ '*30,'\n','\t'*4,'Bienvenido','\n',' ¬ '*30)
     print('1.Registrar Usuario')
     print('2.Añadir libro al catalogo')
     print('3.Eliminar libro al catalogo')
@@ -108,6 +108,7 @@ while salir == True:
     print('7.Veer historial del Usuario')
     print('8.Salir')
     opcion = input('Ingrese un numero: ')
+    print('° '*30)
     if opcion == '1':
         print('Porfavor ingrese los siguientes datos para completar sus registro:')
         while True:
@@ -121,7 +122,7 @@ while salir == True:
                 if respuesta == 'no':
                     break
             else:
-                print('Error.El dato ingresado es incorrecto.')
+                print('Error.dato invalido.Salida forzada')
                 break
     if opcion == '2':
         print('Para registrar libro agrege los suiguientes datos:')
