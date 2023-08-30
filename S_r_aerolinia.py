@@ -162,8 +162,8 @@ def CrearReserva():
                 if long_reserva <= num_asiento_avion:     # arreglar para que no entre ah esa condicion
                     cuantos_tiene_now = len(vuelo_seleccionado.lista_de_reserva)
                     print(f'El vuelo dispone de {(num_asiento_avion) - (cuantos_tiene_now )} de cupos:')
-                    print(f'¿Desea usted reservar este vuelo ?')
-                    consulta = input('Ingrese (si).para confirmar reserva (Cancelar)para caso contrario: ')
+                    print(f'¿Desea usted reservar este vuelo? ')
+                    consulta = input('Ingrese (si) para confirmar reserva y (Cancelar) en caso contrario: ')
                     if consulta == 'si':
                         #codigo para encontrar los la posicion del objeto avion , para crearla como ide para el passport        
                         indice = T_objetosC.Almacenamiento_Vuelo[r].Avion_asigando 
