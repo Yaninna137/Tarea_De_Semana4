@@ -38,11 +38,11 @@ class Pasajero:
     def __repr__(self):
         return f'{self.nombre_apellido} {self.num_pasaporte} {self.L_Vuelos_Reser}'
     def Agregar_historial(self,reserva):
-        self.L_Vuelos_Reser_Vuelos_Reser.append(reserva)
+        self.L_Vuelos_Reser.append(reserva)
     def Mostrar_lista_de_reservas_del_pasajero(self):
-        if len(self.L_Vuelos_Reser_Vuelos_Reser) > 0:
+        if len(self.L_Vuelos_Reser) > 0:
             for registro in self.L_Vuelos_Reser:
-                print('¬ ',registro.vuelos)
+                print('¬ ',registro)
         else:
             print('No hay ningun pasajero en este vuelo')     
 
@@ -106,7 +106,7 @@ class Almacenamineto_de_datos:
     def Buscar_pasajero(self, Pasajero):
         # Buscar al usuario ingresado en la lista de usuarios registrados
         for pasajero in self.Almacenamiento_Pasajero:
-            if pasajero.nombre_apellido == Pasajero.nombre_apellido:
+            if pasajero.nombre_apellido == Pasajero:
                 return self.Almacenamiento_Pasajero.index(pasajero)                     # Si se encuentra al usuario, devolver su índice en la lista
         
         return -1  # Si no se encuentra al usuario, devolver -1  
@@ -283,7 +283,6 @@ while not salidad:
                             print(x+1,'¬.',T_objetosC.Almacenamiento_Pasajero[x].nombre_apellido)
                     else:
                         print('No hay usuario Registrado')
-            print('Cancelar una reserva ')
         # LISTA DE RESERVAS DE UN PASAJERO
         elif subopcion3 == "c":
             print('Estos son los pasejeros que estan el sistema: ')
