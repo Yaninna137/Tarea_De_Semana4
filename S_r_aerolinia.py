@@ -119,7 +119,7 @@ def crearAvion():
     T_objetosC.Almacenamiento_Avion.append(avion)
     print(f"\nEl avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
 def crearVuelo():
-    print('Estos son los aviones que se encuentran en el registro')
+    print('Estos son los aviones que se encuentran en el registro:')
     T_objetosC.mostrarAviones()
     respAvion = int(input("Ingrese el numero de avion para crear un nuevo vuelo: ")) - 1
     if respAvion >= 0 and respAvion <= len(T_objetosC.Almacenamiento_Avion):
@@ -224,7 +224,7 @@ while not salidad:
             T_objetosC.mostrarAviones()
 
     elif opcion == 2:
-        print("a) Registrar nuevo vuelo.")
+        print("\na) Registrar nuevo vuelo.")
         print("b) Ver vuelos disponibles.")
         print("c) Lista de vuelos.")
         print("d) Lista de pasajeros en un vuelo.")
@@ -271,11 +271,11 @@ while not salidad:
                 pasajero_n = T_objetosC.Almacenamiento_Pasajero[index]
                 print(f'El historial del usuario {pasajero_n}:')
                 pasajero_n.Mostrar_lista_de_reservas_del_pasajero()
-                print('Cual reservas deseas cancelar?.Ingrese con ')
+                print('Cual reservas deseas cancelar? Ingrese con ')
             else:
                 print('No se encuentra dicho usuario')
 
-                r = input('¿Desea ver la lista de usarios ingresados en sistema?(si)(no): ')
+                r = input('¿Desea ver la lista de usarios ingresados en sistema? (si)(no): ')
                 if r =='si':
                     log = len(T_objetosC.Almacenamiento_Pasajero)
                     if log > 0:
