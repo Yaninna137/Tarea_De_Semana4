@@ -61,7 +61,7 @@ class Reservacion:
 class Almacenamineto_de_datos:
     def __init__(self):
         self.Almacenamiento_Avion = []        # Atributo 1    # Almacenar cada objeto Avion  
-        self.Almacenamineto_Vuelo = []        # Atributo 2    # // Vuelos
+        self.Almacenamiento_Vuelo = []        # Atributo 2    # // Vuelos
         self.Almacenamiento_Pasajero = []     # Atributo 3    # // Pasajeros
         self.Almacenamiento_Reserva  = []     # Atributo 4    # // Rervaciones
 
@@ -73,7 +73,7 @@ class Almacenamineto_de_datos:
         else:
             print('No se encuentra nigún avión registrado en el sistema')
     def mostrar_TVuelos(self):
-        if len(self.Almacenamineto_Vuelo) > 0:
+        if len(self.Almacenamiento_Vuelo) > 0:
             for i,cada_avion in enumerate(self.Almacenamiento_Avion):
                 print(f'-------{i+1}.{cada_avion}')
                 for x ,cada_vuelo in enumerate(cada_avion.Lista_de_vuelos_creados):
@@ -82,7 +82,7 @@ class Almacenamineto_de_datos:
         else:
             print('No Hay ningun registro de vuelo')
     def mostrar_vuelos_disponibles(self):
-        if len(self.Almacenamineto_Vuelo) > 0:
+        if len(self.Almacenamiento_Vuelo) > 0:
             for i,cada_avion in enumerate(self.Almacenamiento_Avion):
                 print(f'-------{i+1}.{cada_avion}')
                 if len(cada_avion.Lista_de_vuelos_creados) > 0:
@@ -99,8 +99,8 @@ class Almacenamineto_de_datos:
         else:
             print('No hay Pasajeros registrados en el sistema ')
     def Verificar_disponibilidad_vuelo(self,indice):
-        if len(self.Almacenamineto_Vuelo) > 0:
-            return self.Almacenamineto_Vuelo[indice]
+        if len(self.Almacenamiento_Vuelo) > 0:
+            return self.Almacenamiento_Vuelo[indice]
         else:
             return -1 # el vuelo no se encuntra
     def Buscar_pasajero(self, Pasajero):
@@ -137,7 +137,7 @@ def crearVuelo():
         #AGREGAR A VUELO DISPONIBLE por defaut 
         Avion_Asigando.Agregar_vuelo_disponible(vuelo)
         # GUARDAR EL OBJETO VUELO EN almacenamineto vuelo y en en el objeto avion
-        T_objetosC.Almacenamineto_Vuelo.append(vuelo)
+        T_objetosC.Almacenamiento_Vuelo.append(vuelo)
         Avion_Asigando.Lista_de_vuelos_creados.append(vuelo)
         print(F'{vuelo} \n Se ah registrado en el sistema')
     else:
@@ -146,19 +146,19 @@ def crearVuelo():
 def CrearReserva():
     nombre = input("Ingrese su nombre: ")
     apellido = input("Ingrese su apellido: ")
-    if len(T_objetosC.Almacenamiento_Avion) > 0 and len(T_objetosC.Almacenamineto_Vuelo) > 0:
+    if len(T_objetosC.Almacenamiento_Avion) > 0 and len(T_objetosC.Almacenamiento_Vuelo) > 0:
         print(f'Estimado {nombre} {apellido} Contamos con los siguintes vuelos\n ¿Cuall desea reservar?: ')
-        for i,vuelo in enumerate(T_objetosC.Almacenamineto_Vuelo):
+        for i,vuelo in enumerate(T_objetosC.Almacenamiento_Vuelo):
             print(f'{i+1} ¬. {vuelo}')
         while True:
             r = int(input('Ingrese un numero de vuelo a reservar: '))-1  
-            if r >= 0 and r <= len(T_objetosC.Almacenamineto_Vuelo):
+            if r >= 0 and r <= len(T_objetosC.Almacenamiento_Vuelo):
                 vuelo_seleccionado = T_objetosC.Verificar_disponibilidad_vuelo(r)
-                num_asiento_avion = T_objetosC.Almacenamineto_Vuelo[r].Avion_asigando.capacidad         #en el objeto almacenamiento.llamos el atributo Almacenamineto_Vuelo' qe es una lisata de los  objeto vuelos.A continuacion especificamos que objeto vuelo queremos usanos el 'r'
+                num_asiento_avion = T_objetosC.Almacenamiento_Vuelo[r].Avion_asigando.capacidad         #en el objeto almacenamiento.llamos el atributo Almacenamineto_Vuelo' qe es una lisata de los  objeto vuelos.A continuacion especificamos que objeto vuelo queremos usanos el 'r'
                                                                                                         # 'r' seria el index .Ya con el obejto vuelo indicaco .Llamos el atributo del objeto vuelo que es'Avion_asigando'
                                                                                                         # este atributo contiene al objeto avion.
                                                                                                         # por ultimo en este objeto avion llamos su atributo 'capacidad', el cual gurda el numero de asinetos que tiene :D
-                long_reserva = len(T_objetosC.Almacenamineto_Vuelo[r].lista_de_reserva)
+                long_reserva = len(T_objetosC.Almacenamiento_Vuelo[r].lista_de_reserva)
                 if long_reserva <= num_asiento_avion:     # arreglar para que no entre ah esa condicion
                     cuantos_tiene_now = len(vuelo_seleccionado.lista_de_reserva)
                     print(f'El vuelo dispone de {(num_asiento_avion) - (cuantos_tiene_now )} de cupos:')
@@ -166,7 +166,7 @@ def CrearReserva():
                     consulta = input('Ingrese (si).para confirmar reserva (Cancelar)para caso contrario: ')
                     if consulta == 'si':
                         #codigo para encontrar los la posicion del objeto avion , para crearla como ide para el passport        
-                        indice = T_objetosC.Almacenamineto_Vuelo[r].Avion_asigando 
+                        indice = T_objetosC.Almacenamiento_Vuelo[r].Avion_asigando 
                         contador = 0
                         for avion_b in T_objetosC.Almacenamiento_Avion:
                             contador += 1
@@ -247,7 +247,7 @@ while not salidad:
         elif subopcion2 == "d":
             T_objetosC.mostrar_TVuelos()
             r = int(input('numero: ')) -1
-            T_objetosC.Almacenamineto_Vuelo[r].mostrar_pasajero()
+            T_objetosC.Almacenamiento_Vuelo[r].mostrar_pasajero()
             # antes de su creacion , se requiere registro de reserva.
     
     elif opcion == 3:
