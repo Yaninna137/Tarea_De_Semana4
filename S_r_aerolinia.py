@@ -3,20 +3,20 @@ class Avion:
     def __init__(self, modelo, num_asientos):
         self.modelo = modelo                #Atributo 1
         self.capacidad = num_asientos       #Atributo 2
-        self.Lista_vuelos_dispo = []        #Atributo 3  # Lista vacia ,Su funcion sera Almacenar todos los vuelos 'Disponibles'
-        self.Lista_de_vuelos_creados = []   #Atributo 4 # array vacia , almacenara Todos los objetos vuelos del avion
+        self.Lista_vuelos_dispo = []        #Atributo 3  # Lista vacia, su funcion sera Almacenar todos los vuelos 'Disponibles'
+        self.Lista_de_vuelos_creados = []   #Atributo 4 # array vacia, almacenara Todos los objetos vuelos del avion
     def __repr__(self):
         return f'---- Modelo: {self.modelo},Num.Asientos: {self.capacidad}'
     
     def Agregar_vuelo_disponible(self, vuelo):
         self.Lista_vuelos_dispo.append(vuelo)
 class Vuelo:
-    def __init__(self, num_vuelo, origen, destino, Fecha_hora, Avion_asigando):    # Vuelo(num_vuelo,origen,destino,fecha-hora,Avion asignado)
+    def __init__(self, num_vuelo, origen, destino, Fecha_hora, Avion_asigando):   # Vuelo(num_vuelo,origen,destino,fecha-hora,Avion asignado)
         self.num_vuelo = num_vuelo                        #Atributo 1
         self.origen = origen                              #Atributo 2
         self.destino = destino                            #Atributo 3
         self.Fecha_hora = Fecha_hora                      #Atributo 4
-        self.Avion_asigando = Avion_asigando                     #Atributo 5
+        self.Avion_asigando = Avion_asigando              #Atributo 5
         self.lista_de_reserva = []                        #Atributo 6  #Con lista vacia ,#Su funcion sera 
         self.Estado = True                                #Atributo 7 # Su funcion es que cuando se llegue al tope de reservas (num-asinetos del avion) , este se ponga falso y mostrar que este vuelo ya no esta disponible                           
     def __repr__(self):
@@ -31,10 +31,10 @@ class Vuelo:
         else:
             print('No hay ningun pasajero en este vuelo')
 class Pasajero:
-    def __init__(self, nombre_apellido, num_pasaporte):    # pasajeros(nombre,numero de pasaporte, lista de vuelos reservados)
-        self.nombre_apellido = nombre_apellido                     #Atributo 1
-        self.num_pasaporte = num_pasaporte                #Atributo 2
-        self.L_Vuelos_Reser = []                          #Atributo 3 #lista vacia#Su funcion ser alamcenar todas las reservas del pasajero
+    def __init__(self, nombre_apellido, num_pasaporte):   # pasajeros(nombre,numero de pasaporte, lista de vuelos reservados)
+        self.nombre_apellido = nombre_apellido            # Atributo 1
+        self.num_pasaporte = num_pasaporte                # Atributo 2
+        self.L_Vuelos_Reser = []                          # Atributo 3 #lista vacia #Su funcion ser alamcenar todas las reservas del pasajero
     def __repr__(self):
         return f'{self.nombre_apellido} {self.num_pasaporte} {self.L_Vuelos_Reser}'
     def Agregar_historial(self,reserva):
@@ -42,13 +42,13 @@ class Pasajero:
     def Mostrar_lista_de_reservas_del_pasajero(self):
         if len(self.L_Vuelos_Reser) > 0:
             for registro in self.L_Vuelos_Reser:
-                print('¬ ',registro)
+                print('¬ ', registro)
         else:
             print('No hay ningun pasajero en este vuelo')     
 
 class Reservacion:
     def __init__(self, num_reservacion, pasajero, vuelo, Estado = 'reservado'):
-        self.num_reservacion = num_reservacion                      #Atributo 1
+        self.num_reservacion = num_reservacion            #Atributo 1
         self.pasajero = pasajero                          #Atributo 2
         self.vuelo = vuelo                                #Atributo 3
         self.Estado = Estado                              #Atributo 4        
