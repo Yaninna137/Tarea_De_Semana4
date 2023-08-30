@@ -20,7 +20,7 @@ class Vuelo:
         self.lista_de_reserva = []                        #Atributo 6  #Con lista vacia, #Su funcion sera 
         self.Estado = True                                #Atributo 7 # Su funcion es que cuando se llegue al tope de reservas (num-asinetos del avion), este se ponga falso y mostrar que este vuelo ya no esta disponible                           
     def __repr__(self):
-        return f'{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
+        return f'\n{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
     def Agregar_pasajero(self,r_pasajero):
         self.lista_de_reserva.append(r_pasajero)
         
@@ -117,7 +117,8 @@ def crearAvion():
     numAsientos = int(input("Ingrese el numero de asientos del avion: "))
     avion = Avion(modelo, numAsientos)
     T_objetosC.Almacenamiento_Avion.append(avion)
-    print(f"El avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
+    print(f"\nEl avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
+
 def crearVuelo():
     print('Estos son los aviones que se encuentran en el registro')
     T_objetosC.mostrarAviones()
@@ -215,7 +216,7 @@ while not salidad:
         if subopcion == "a":
             crearAvion()
             while True:
-                r = input('Desea crear otro avion? (si)(no): ')
+                r = input('\nDesea crear otro avion? (si)(no): ')
                 if r == 'si':
                     crearAvion()
                 else:
