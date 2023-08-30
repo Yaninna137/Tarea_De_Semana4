@@ -20,7 +20,7 @@ class Vuelo:
         self.lista_de_reserva = []                        #Atributo 6  #Con lista vacia, #Su funcion sera 
         self.Estado = True                                #Atributo 7 # Su funcion es que cuando se llegue al tope de reservas (num-asinetos del avion), este se ponga falso y mostrar que este vuelo ya no esta disponible                           
     def __repr__(self):
-        return f'{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
+        return f'\n{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
     def Agregar_pasajero(self,r_pasajero):
         self.lista_de_reserva.append(r_pasajero)
         
@@ -121,7 +121,7 @@ def crearAvion():
     T_objetosC.Almacenamiento_Avion.append(avion)
     print(f"\nEl avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
 def crearVuelo():
-    print('Estos son los aviones que se encuentran en el registro')
+    print('Estos son los aviones que se encuentran en el registro:')
     T_objetosC.mostrarAviones()
     respAvion = int(input("Ingrese el numero de avion para crear un nuevo vuelo: ")) - 1
     if respAvion >= 0 and respAvion <= len(T_objetosC.Almacenamiento_Avion):
@@ -205,8 +205,7 @@ def CrearReserva():
         print(f'Estimado {nombre} {apellido}, en este momento, no hay vuelos disponibles para reservar')
 salidad =  False
 while not salidad:
-    print("\n----------------MENÚ PRINCIPAL.----------------")
-    print("1.- Avión.")
+    print(' ¬ '*30,'\n','\t'*4,'MENU PRINCIPAL','\n',' ¬ '*30)
     print("2.- Vuelo.")
     print("3.- Reserva.")
     print("4.- Salir.")
@@ -215,12 +214,13 @@ while not salidad:
 
     if opcion == 1:
         print("\na) Registrar nuevo avión.")
-        print("b) Ver lista de aviones.")
+        print("b) Ver lista de aviones.\n")
         subopcion = input("Seleccione una opción: ")
         if subopcion == "a":
             crearAvion()
             while True:
-                r = input('¿Desea crear otro avion? (si)(no): ')
+                r = input('\nDesea crear otro avion? (si)(no): ')
+
                 if r == 'si':
                     crearAvion()
                 else:
@@ -229,10 +229,10 @@ while not salidad:
             T_objetosC.mostrarAviones()
 
     elif opcion == 2:
-        print("a) Registrar nuevo vuelo.")
+        print("\na) Registrar nuevo vuelo.")
         print("b) Ver vuelos disponibles.")
         print("c) Lista de vuelos.")
-        print("d) Lista de pasajeros en un vuelo.")
+        print("d) Lista de pasajeros en un vuelo.\n")
         subopcion2 = input("Seleccione una opcion: ")
         if subopcion2 == "a":
             if len(T_objetosC.Almacenamiento_Avion) > 0:
@@ -256,10 +256,10 @@ while not salidad:
             # antes de su creacion , se requiere registro de reserva.
     
     elif opcion == 3:
-        print("a) Hacer una reserva.")
+        print("\na) Hacer una reserva.")
         print("b) Cancelar una reserva.")
         print("c) Lista de reservas de un pasajero.")
-        print("d) Lista de pasajeros en un vuelo.")
+        print("d) Lista de pasajeros en un vuelo.\n")
         subopcion3 = input("Seleccione una opción: ")
 
         # HACER UNA RESERVA 
