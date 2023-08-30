@@ -7,6 +7,7 @@ class Avion:
         self.Lista_de_vuelos_creados = []   #Atributo 4 # array vacia , almacenara Todos los objetos vuelos del avion
     def __repr__(self):
         return f'---- Modelo: {self.modelo},Num.Asientos: {self.capacidad}'
+    
     def Agregar_vuelo_disponible(self, vuelo):
         self.Lista_vuelos_dispo.append(vuelo)
 class Vuelo:
@@ -20,6 +21,15 @@ class Vuelo:
         self.Estado = True                                #Atributo 7 # Su funcion es que cuando se llegue al tope de reservas (num-asinetos del avion) , este se ponga falso y mostrar que este vuelo ya no esta disponible                           
     def __repr__(self):
         return f'{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
+    def Agregar_pasajero(self,r_pasajero):
+        self.lista_de_reserva.append(r_pasajero)
+        
+    def mostrar_pasajero(self):
+        if len(self.lista_de_reserva) > 0:
+            for registro in self.lista_de_reserva:
+                print('¬ ',registro.pasajero)
+        else:
+            print('No hay ningun pasajero en este vuelo')
 class Pasajero:
     def __init__(self, nombre_apellido, num_pasaporte):    # pasajeros(nombre,numero de pasaporte, lista de vuelos reservados)
         self.nombre_apellido = nombre_apellido                     #Atributo 1
@@ -27,6 +37,15 @@ class Pasajero:
         self.L_Vuelos_Reser = []                          #Atributo 3 #lista vacia#Su funcion ser alamcenar todas las reservas del pasajero
     def __repr__(self):
         return f'{self.nombre_apellido} {self.num_pasaporte} {self.L_Vuelos_Reser}'
+    def Agregar_historial(self,reserva):
+        self.L_Vuelos_Reser_Vuelos_Reser.append(reserva)
+    def Mostrar_lista_de_reservas_del_pasajero(self):
+        if len(self.L_Vuelos_Reser_Vuelos_Reser) > 0:
+            for registro in self.L_Vuelos_Reser:
+                print('¬ ',registro.vuelos)
+        else:
+            print('No hay ningun pasajero en este vuelo')     
+
 class Reservacion:
     def __init__(self, num_reservacion, pasajero, vuelo, Estado = 'reservado'):
         self.num_reservacion = num_reservacion                      #Atributo 1
@@ -73,11 +92,24 @@ class Almacenamineto_de_datos:
                     print('No hay vuelos registrados,para este avión')
         else:
             print('No hay vuelos disponibles :(')
+    def mostrar_Tpasajeros(self):
+        if len(self.Almacenamiento_Pasajero) > 0:
+            for i,cada_pasajero in enumerate(self.Almacenamiento_Pasajero):
+                print(f'-------{i+1}.{cada_pasajero.nombre_apellido}')
+        else:
+            print('No hay Pasajeros registrados en el sistema ')
     def Verificar_disponibilidad_vuelo(self,indice):
         if len(self.Almacenamineto_Vuelo) > 0:
             return self.Almacenamineto_Vuelo[indice]
         else:
             return -1 # el vuelo no se encuntra
+    def Buscar_pasajero(self, Pasajero):
+        # Buscar al usuario ingresado en la lista de usuarios registrados
+        for pasajero in self.Almacenamiento_Pasajero:
+            if pasajero.nombre_apellido == Pasajero.nombre_apellido:
+                return self.Almacenamiento_Pasajero.index(pasajero)                     # Si se encuentra al usuario, devolver su índice en la lista
+        
+        return -1  # Si no se encuentra al usuario, devolver -1  
 T_objetosC = Almacenamineto_de_datos()
 
 def crearAvion():
@@ -148,8 +180,11 @@ def CrearReserva():
                         Reservacion_n = Reservacion(long_reserva + 1,Pasajero_n,vuelo_seleccionado,'Reservado')
                         #Guardar reservas en los objetos.
                         T_objetosC.Almacenamiento_Reserva.append(Reservacion_n)                        #Guardar registro(reserva) en el atributo del obejto Almacenamineto
-                        vuelo_seleccionado.lista_de_reserva.append(Reservacion_n)                      #Guardar registro(reserva) en el atributo del obejto vuelo
-                        Pasajero_n.L_Vuelos_Reser.append(Reservacion_n)                                #Guardar registro(reserva) en el atributo del obejto pasajero
+                        T_objetosC.Almacenamiento_Pasajero.append(Pasajero_n)
+#                        vuelo_seleccionado.lista_de_reserva.append(Reservacion_n)                      #Guardar registro(reserva) en el atributo del obejto vuelo
+
+                        Pasajero_n.Agregar_historial(Reservacion_n)                                #Guardar registro(reserva) en el atributo del obejto pasajero
+                        vuelo_seleccionado.Agregar_pasajero(Reservacion_n)
                         print(f'Su vuelo ah sido reservado. su numero de pasaporte es:{passport}')
                         print(vuelo_seleccionado.lista_de_reserva)
                         print(Pasajero_n.L_Vuelos_Reser)
@@ -210,7 +245,9 @@ while not salidad:
         elif subopcion2 == "c":
             T_objetosC.mostrar_TVuelos()
         elif subopcion2 == "d":
-            pass
+            T_objetosC.mostrar_TVuelos()
+            r = int(input('numero: ')) -1
+            T_objetosC.Almacenamineto_Vuelo[r].mostrar_pasajero()
             # antes de su creacion , se requiere registro de reserva.
     
     elif opcion == 3:
@@ -219,13 +256,41 @@ while not salidad:
         print("c) Lista de reservas de un pasajero.")
         print("d) Lista de pasajeros en un vuelo.")
         subopcion3 = input("Seleccione una opción: ")
+
+        # HACER UNA RESERVA 
         if subopcion3 == "a":
             CrearReserva()
+        # CANCELAR RESERVA: 
         elif subopcion3 == "b":
-            print('Cancelar una reserva')
+            print('Ingrese los siguientes datos para Cancelar su reserva: ')
+            nombre = input('Ingrese el nombre: ')
+            apellido = input('Ingrese el apellido: ')
+            index = T_objetosC.Buscar_pasajero(f'{nombre} {apellido}')
+            if index != -1:
+                # debes bucar y cancelar el dato
+                pasajero_n = T_objetosC.Almacenamiento_Pasajero[index]
+                print(f'El historial del usuario {pasajero_n}:')
+                pasajero_n.Mostrar_lista_de_reservas_del_pasajero()
+                print('Cual reservas deseas cancelar?.Ingrese con ')
+            else:
+                print('No se encuentra dicho usuario')
 
+                r = input('¿Desea veer la lista de usarios ingresados en sistema?(si)(no): ')
+                if r =='si':
+                    log = len(T_objetosC.Almacenamiento_Pasajero)
+                    if log > 0:
+                        for x in range(log):
+                            print(x+1,'¬.',T_objetosC.Almacenamiento_Pasajero[x].nombre_apellido)
+                    else:
+                        print('No hay usuario Registrado')
+            print('Cancelar una reserva ')
+        # LISTA DE RESERVAS DE UN PASAJERO
         elif subopcion3 == "c":
-            print("'Lista, reservas de un pasajero")
+            print('Estos son los pasejeros que estan el sistema: ')
+            T_objetosC.mostrar_Tpasajeros()
+            r = int(input('numero: '))-1
+            T_objetosC.Almacenamiento_Pasajero[r].Mostrar_lista_de_reservas_del_pasajero()
+        # LISTAS DE PASAJEROS EN UN VUELO
         elif subopcion3 == "d":
             print("Lista de pasajeros en un vuelo")
 
