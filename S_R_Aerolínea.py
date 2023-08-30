@@ -1,6 +1,6 @@
 
 class Avion:
-    def __init__(self,modelo,num_asientos):
+    def __init__(self, modelo, num_asientos):
         self.modelo = modelo                #Atributo 1
         self.capacidad = num_asientos       #Atributo 2
         self.Lista_vuelos_dispo = []        #Atributo 3  # Lista vacia ,Su funcion sera Almacenar todos los vuelos disponibles
@@ -15,31 +15,31 @@ class Avion:
         else:
             print('No hay vuelo disponible')                #En caso que no cumpla condicion posterior , imprimira solo un mensaje
 class Vuelo:
-    def __init__(self,num_vuelo,origen,destino,Fecha_hora,Avion_asigando):    # Vuelo(num_vuelo,origen,destino,fecha-hora,Avion asignado)
+    def __init__(self, num_vuelo, origen, destino, Fecha_hora, Avion_asigando):    # Vuelo(num_vuelo,origen,destino,fecha-hora,Avion asignado)
         self.num_vuelo = num_vuelo                        #Atributo 1
         self.origen = origen                              #Atributo 2
         self.destino = destino                            #Atributo 3
-        self.fecha_hora = Fecha_hora                      #Atributo 4
-        self.Avion_a = Avion_asigando                     #Atributo 5
+        self.Fecha_hora = Fecha_hora                      #Atributo 4
+        self.Avion_asigando = Avion_asigando                     #Atributo 5
         self.lista_de_reserva = []                        #Atributo 6  #Con lista vacia ,#Su funcion sera 
         self.Estado = True                                #Atributo 7 # Su funcion es que cuando se llegue al tope de reservas (num-asinetos del avion) , este se ponga falso y mostrar que este vuelo ya no esta disponible                           
     def __repr__(self):
-        return f'{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.fecha_hora}  Avión Asignado:{self.Avion_a.modelo}'
+        return f'{self.num_vuelo}¬. vuelo de Origen:{self.origen}  Destino:{self.destino}  Fecha-hora:{self.Fecha_hora}  Avión Asignado:{self.Avion_asigando.modelo}'
 class Pasajero:
-    def __init__(self,nombre_apellido,num_pasaporte):    # pasajeros(nombre,numero de pasaporte, lista de vuelos reservados)
-        self.nombre = nombre_apellido                     #Atributo 1
+    def __init__(self, nombre_apellido, num_pasaporte):    # pasajeros(nombre,numero de pasaporte, lista de vuelos reservados)
+        self.nombre_apellido = nombre_apellido                     #Atributo 1
         self.num_pasaporte = num_pasaporte                #Atributo 2
         self.L_Vuelos_Reser = []                          #Atributo 3 #lista vacia#Su funcion ser alamcenar todas las reservas del pasajero
     def __repr__(self):
-        return f'{self.nombre} {self.num_pasaporte} {self.L_Vuelos_Reser}'
+        return f'{self.nombre_apellido} {self.num_pasaporte} {self.L_Vuelos_Reser}'
 class Reservacion:
-    def __init__(self,num_reservacion,pasajero,vuelo,Estado = 'reservado'):
-        self.num_r = num_reservacion                      #Atributo 1
+    def __init__(self, num_reservacion, pasajero, vuelo, Estado = 'reservado'):
+        self.num_reservacion = num_reservacion                      #Atributo 1
         self.pasajero = pasajero                          #Atributo 2
         self.vuelo = vuelo                                #Atributo 3
-        self.estado = Estado                              #Atributo 4
+        self.Estado = Estado                              #Atributo 4
     def __repr__(self):
-        return f'{self.num_r} ¬.Reserva de: {self.pasajero.nombre} en el vuelo: {self.vuelo.num_vuelo}' 
+        return f'{self.num_reservacion} ¬.Reserva de: {self.pasajero.nombre_apellido} en el vuelo: {self.vuelo.num_vuelo}' 
 # -Esta clase servira para almacenar todos los objetos que se crean: avion, pasajero, vuelo, reserva.
 class Almacenamineto_de_datos:
     def __init__(self):
@@ -54,31 +54,32 @@ pasajeros = []
 reservas = []
 
 def crearAvion():
-    modeloA = input("Ingrese el modelo del avion: ")
+    modelo = input("Ingrese el modelo del avion: ")
     numAsientos = int(input("Ingrese el numero de asientos del avion: "))
-    avion = Avion(modeloA, numAsientos)
+    avion = Avion(modelo, numAsientos)
     aviones.append(avion)
-    print(f"El avion modelo {modeloA} ha sido correctamente registrado, con capacidad para {numAsientos} pasajeros")
+    print(f"El avion modelo {modelo} ha sido correctamente registrado, con capacidad para {numAsientos} pasajeros")
         
 def mostrarAviones():
     print("Aviones disponibles:")
     for i, avion in enumerate(aviones):
-        print(f"{i + 1}.---- Modelo: {avion.modeloA}, Asientos: {avion.numAsientos}") 
+        print(f"{i + 1}.---- Modelo: {avion.modelo}, Asientos: {avion.capacidad}") 
             
 def crearVuelo():
     origen = input("Ingrese la cuidad de origen del vuelo: ")
     destino = input("Ingres la cuidad de destino del vuelo: ")
     fecha_hora = input("Ingrese la fecha y hora del vuelo: ")
     mostrarAviones()
-    respAvion = int(input("Ingrese el numero de avion para el vuelo: ")) + 1
-    avionDesignado = aviones[respAvion]
-    vuelo = Vuelo(origen, destino, fecha_hora, avionDesignado)
+    respAvion = int(input("Ingrese el numero de avion para el vuelo: ")) - 1
+    Avion_asigando = aviones[respAvion]
+    num_vuelo = Avion_asigando
+    vuelo = Vuelo(num_vuelo, origen, destino, fecha_hora, Avion_asigando)
     vuelos.append(vuelo)
     print("Se ha registrado el vuelo.")
 
 def mostrarVuelos():
     for i, vuelo in enumerate(vuelos):
-        print(f".- {vuelo.origen} hasta {vuelo.destino}, {Avion.fecha_hora}, {Avion.avionDesignado}")
+        print(f".- {vuelo.origen} hasta {vuelo.destino}, {vuelo.fecha_hora}, {vuelo.Avion_asigando}")
     
 def crearReserva():
     nombre = input("Ingrese su nombre: ")
@@ -98,7 +99,7 @@ def crearReserva():
 
     if 0 <= respVuelo < len(vuelos):
         vueloSelec = vuelos[respVuelo]
-        reserva = Reserva(pasajero, vueloSelec)
+        reserva = reserva(pasajero, vueloSelec)
         pasajero.reservas.append(reserva)
         print("La reserva ha sido creada.")
     else:
