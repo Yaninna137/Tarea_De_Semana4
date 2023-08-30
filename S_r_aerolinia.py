@@ -89,7 +89,7 @@ class Almacenamineto_de_datos:
                     for x ,cada_vuelo in enumerate(cada_avion.Lista_de_vuelos_creados):
                         print(f'{x+1} ¬. {cada_vuelo}')
                 else: 
-                    print('No hay vuelos registrados,para este avión')
+                    print('No hay vuelos registrados, para este avión')
         else:
             print('No hay vuelos disponibles :(')
     def mostrar_Tpasajeros(self):
@@ -200,7 +200,7 @@ def CrearReserva():
         print(f'Estimado {nombre} {apellido} , en este momento, no hay vuelos disponibles para reservar' )
 salidad =  False
 while not salidad:
-    print("----------------MENÚ PRINCIPAL.----------------")
+    print(' ¬ '*30,'\n','\t'*4,'MENU PRINCIPAL','\n',' ¬ '*30)
     print("1.- Avión.")
     print("2.- Vuelo.")
     print("3.- Reserva.")
@@ -209,8 +209,8 @@ while not salidad:
     opcion = int(input("Seleccione una opción: "))
 
     if opcion == 1:
-        print("a) Registrar nuevo avión.")
-        print("b) Ver lista de aviones.")
+        print("\na) Registrar nuevo avión.")
+        print("b) Ver lista de aviones.\n")
         subopcion = input("Seleccione una opción: ")
         if subopcion == "a":
             crearAvion()
@@ -224,10 +224,10 @@ while not salidad:
             T_objetosC.mostrarAviones()
 
     elif opcion == 2:
-        print("a) Registrar nuevo vuelo.")
+        print("\na) Registrar nuevo vuelo.")
         print("b) Ver vuelos disponibles.")
         print("c) Lista de vuelos.")
-        print("d) Lista de pasajeros en un vuelo.")
+        print("d) Lista de pasajeros en un vuelo.\n")
         subopcion2 = input("Seleccione una opcion: ")
         if subopcion2 == "a":
             if len(T_objetosC.Almacenamiento_Avion) > 0:
@@ -251,10 +251,10 @@ while not salidad:
             # antes de su creacion , se requiere registro de reserva.
     
     elif opcion == 3:
-        print("a) Hacer una reserva.")
+        print("\na) Hacer una reserva.")
         print("b) Cancelar una reserva.")
         print("c) Lista de reservas de un pasajero.")
-        print("d) Lista de pasajeros en un vuelo.")
+        print("d) Lista de pasajeros en un vuelo.\n")
         subopcion3 = input("Seleccione una opción: ")
 
         # HACER UNA RESERVA 
