@@ -118,9 +118,8 @@ def crearAvion():
     avion = Avion(modelo, numAsientos)
     T_objetosC.Almacenamiento_Avion.append(avion)
     print(f"\nEl avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
-
 def crearVuelo():
-    print('Estos son los aviones que se encuentran en el registro')
+    print('Estos son los aviones que se encuentran en el registro:')
     T_objetosC.mostrarAviones()
     respAvion = int(input("Ingrese el numero de avion para crear un nuevo vuelo: ")) - 1
     if respAvion >= 0 and respAvion <= len(T_objetosC.Almacenamiento_Avion):
@@ -163,8 +162,8 @@ def CrearReserva():
                 if long_reserva <= num_asiento_avion:     # arreglar para que no entre ah esa condicion
                     cuantos_tiene_now = len(vuelo_seleccionado.lista_de_reserva)
                     print(f'El vuelo dispone de {(num_asiento_avion) - (cuantos_tiene_now )} de cupos:')
-                    print(f'¿Desea usted reservar este vuelo ?')
-                    consulta = input('Ingrese (si).para confirmar reserva (Cancelar)para caso contrario: ')
+                    print(f'¿Desea usted reservar este vuelo? ')
+                    consulta = input('Ingrese (si) para confirmar reserva y (Cancelar) en caso contrario: ')
                     if consulta == 'si':
                         #codigo para encontrar los la posicion del objeto avion , para crearla como ide para el passport        
                         indice = T_objetosC.Almacenamiento_Vuelo[r].Avion_asigando 
@@ -272,7 +271,7 @@ while not salidad:
                 pasajero_n = T_objetosC.Almacenamiento_Pasajero[index]
                 print(f'El historial del usuario {pasajero_n}:')
                 pasajero_n.Mostrar_lista_de_reservas_del_pasajero()
-                print('Cual reservas deseas cancelar?.Ingrese con ')
+                print('Cual reservas deseas cancelar? Ingrese con ')
             else:
                 print('No se encuentra dicho usuario')
 
