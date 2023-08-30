@@ -113,7 +113,7 @@ class Almacenamineto_de_datos:
 T_objetosC = Almacenamineto_de_datos()
 
 def crearAvion():
-    modelo = input("Ingrese el modelo del avion: ")
+    modelo = input("\nIngrese el modelo del avion: ")
     numAsientos = int(input("Ingrese el numero de asientos del avion: "))
     avion = Avion(modelo, numAsientos)
     T_objetosC.Almacenamiento_Avion.append(avion)
@@ -186,7 +186,7 @@ def CrearReserva():
 
                         Pasajero_n.Agregar_historial(Reservacion_n)                                #Guardar registro(reserva) en el atributo del obejto pasajero
                         vuelo_seleccionado.Agregar_pasajero(Reservacion_n)
-                        print(f'Su vuelo ah sido reservado. su numero de pasaporte es:{passport}')
+                        print(f'Su vuelo ha sido reservado. su numero de pasaporte es:{passport}')
                         print(vuelo_seleccionado.lista_de_reserva)
                         print(Pasajero_n.L_Vuelos_Reser)
                         print(T_objetosC.Almacenamiento_Reserva)
@@ -202,7 +202,6 @@ def CrearReserva():
 salidad =  False
 while not salidad:
     print(' ¬ '*30,'\n','\t'*4,'MENU PRINCIPAL','\n',' ¬ '*30)
-    print("1.- Avión.")
     print("2.- Vuelo.")
     print("3.- Reserva.")
     print("4.- Salir.")
@@ -217,6 +216,7 @@ while not salidad:
             crearAvion()
             while True:
                 r = input('\nDesea crear otro avion? (si)(no): ')
+
                 if r == 'si':
                     crearAvion()
                 else:
@@ -276,7 +276,7 @@ while not salidad:
             else:
                 print('No se encuentra dicho usuario')
 
-                r = input('¿Desea veer la lista de usarios ingresados en sistema?(si)(no): ')
+                r = input('¿Desea ver la lista de usarios ingresados en sistema?(si)(no): ')
                 if r =='si':
                     log = len(T_objetosC.Almacenamiento_Pasajero)
                     if log > 0:
