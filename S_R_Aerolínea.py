@@ -113,11 +113,11 @@ class Almacenamineto_de_datos:
 T_objetosC = Almacenamineto_de_datos()
 
 def crearAvion():
-    modelo = input("Ingrese el modelo del avion: ")
+    modelo = input("\nIngrese el modelo del avion: ")
     numAsientos = int(input("Ingrese el numero de asientos del avion: "))
     avion = Avion(modelo, numAsientos)
     T_objetosC.Almacenamiento_Avion.append(avion)
-    print(f"El avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
+    print(f"\nEl avion de modelo '{avion.modelo}', con capacidad para {avion.capacidad} pasajeros. \nHa sido correctamente registrado")    
 def crearVuelo():
     print('Estos son los aviones que se encuentran en el registro')
     T_objetosC.mostrarAviones()
@@ -185,7 +185,7 @@ def CrearReserva():
 
                         Pasajero_n.Agregar_historial(Reservacion_n)                                #Guardar registro(reserva) en el atributo del obejto pasajero
                         vuelo_seleccionado.Agregar_pasajero(Reservacion_n)
-                        print(f'Su vuelo ah sido reservado. su numero de pasaporte es:{passport}')
+                        print(f'Su vuelo ha sido reservado. su numero de pasaporte es: {passport}')
                         print(vuelo_seleccionado.lista_de_reserva)
                         print(Pasajero_n.L_Vuelos_Reser)
                         print(T_objetosC.Almacenamiento_Reserva)
@@ -200,7 +200,7 @@ def CrearReserva():
         print(f'Estimado {nombre} {apellido}, en este momento, no hay vuelos disponibles para reservar' )
 salidad =  False
 while not salidad:
-    print("----------------MENÚ PRINCIPAL.----------------")
+    print("\n----------------MENÚ PRINCIPAL.----------------")
     print("1.- Avión.")
     print("2.- Vuelo.")
     print("3.- Reserva.")
@@ -209,13 +209,13 @@ while not salidad:
     opcion = int(input("Seleccione una opción: "))
 
     if opcion == 1:
-        print("a) Registrar nuevo avión.")
+        print("\na) Registrar nuevo avión.")
         print("b) Ver lista de aviones.")
         subopcion = input("Seleccione una opción: ")
         if subopcion == "a":
             crearAvion()
             while True:
-                r = input('Desea crear otro avion? (si)(no): ')
+                r = input('¿Desea crear otro avion? (si)(no): ')
                 if r == 'si':
                     crearAvion()
                 else:
@@ -275,7 +275,7 @@ while not salidad:
             else:
                 print('No se encuentra dicho usuario')
 
-                r = input('¿Desea veer la lista de usarios ingresados en sistema?(si)(no): ')
+                r = input('¿Desea ver la lista de usarios ingresados en sistema? (si)(no): ')
                 if r =='si':
                     log = len(T_objetosC.Almacenamiento_Pasajero)
                     if log > 0:
